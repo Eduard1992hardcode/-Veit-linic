@@ -27,6 +27,7 @@ namespace VietClinic
                     options.UseSqlServer(Configuration.GetConnectionString("_connectionstring")));
 
             services.AddTransient<IPetService, PetService>();
+            services.AddTransient<IOwnerService, OwnerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

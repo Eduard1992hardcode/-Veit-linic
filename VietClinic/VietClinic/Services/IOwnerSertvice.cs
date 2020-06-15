@@ -11,5 +11,6 @@ namespace VietClinic.Services
         Task<Owner> EditOwner(Owner owner, long id);
         Task<Owner> AddOwner(Owner owner);
         Task<bool> DeletePet(long id);
+        
     }
 }

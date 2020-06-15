@@ -7,7 +7,7 @@ using VietClinic.Models;
 
 namespace VietClinic.Services
 {
-    public class OwnerSertvice : IOwnerService
+    public class OwnerService : IOwnerService
     {
         private readonly DataContext _context;
 
@@ -45,7 +45,7 @@ namespace VietClinic.Services
 
             petFromDb.Adress = owner.Adress;
             petFromDb.TelNumber = owner.TelNumber;
-            
+
 
             await _context.SaveChangesAsync();
 
@@ -62,3 +62,4 @@ namespace VietClinic.Services
             return await _context.Owners.ToListAsync();
         }
     }
+}
