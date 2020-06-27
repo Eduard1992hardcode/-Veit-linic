@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using VietClinic.Dto;
 using VietClinic.Models;
 using VietClinic.Services;
 
@@ -46,14 +43,9 @@ namespace VietClinic.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPet(long id, Pet pet)
-        {
-            if (id != pet.Id)
-            {
-                return BadRequest();
-            }
-
-            await _petService.AddPet(pet);
+        public async Task<IActionResult> PutPet(long id, PetDTO pet)
+        { 
+            await _petService.EditPet(pet, id);
 
             return Ok(pet);
         }
@@ -62,7 +54,7 @@ namespace VietClinic.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Pet>> PostPet(Pet pet)
+        public async Task<ActionResult<Pet>> PostPet(PetDTO pet)
         {
             var result = await _petService.AddPet(pet);
 

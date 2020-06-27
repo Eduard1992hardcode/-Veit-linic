@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using VietClinic.Models;
 
@@ -54,7 +52,7 @@ namespace VietClinic.Services
 
         public async Task<Owner> GetOwner(long id)
         {
-            return await _context.Owners.FindAsync(id);
+            return await _context.Owners.Include(p => p.Pets).FirstOrDefaultAsync(o => o.Id==id);
         }
 
         public async Task<List<Owner>> GetOwners()

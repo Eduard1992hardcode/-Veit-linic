@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VietClinic.Dto;
 using VietClinic.Models;
 
 namespace VietClinic.Services
@@ -8,14 +10,17 @@ namespace VietClinic.Services
     public class PetService : IPetService
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public PetService(DataContext context)
+        public PetService(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task<Pet> AddPet(Pet pet)
+        public async Task<Pet> AddPet(PetDTO petDto)
         {
+            var pet = _mapper.Map<Pet>(petDto);
             _context.Pets.Add(pet);
             await _context.SaveChangesAsync();
             return pet;
@@ -35,21 +40,13 @@ namespace VietClinic.Services
             return true;
         }
 
-        public async Task<Pet> EditPet(Pet pet, long id)
+        public async Task<Pet> EditPet(PetDTO petDto, long id)
         {
 
             var petFromDb = await _context.Pets.FindAsync(id);
 
-            if (petFromDb == null)
-            {
-                return pet;
-            }
+            _mapper.Map(petDto, petFromDb);
 
-            petFromDb.Name = pet.Name;
-            petFromDb.Age = pet.Age;
-            petFromDb.Weight = pet.Weight;
-            petFromDb.Color = pet.Color;
-            
             await _context.SaveChangesAsync();
            
             return petFromDb;

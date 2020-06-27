@@ -19,7 +19,7 @@ namespace VietClinic.Models
             modelBuilder.Entity<Owner>(o =>
             {
                 o.HasMany(o => o.Pets)
-                .WithOne(p => p.Owner)
+                .WithOne()
                 .HasForeignKey(p => p.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
             });
